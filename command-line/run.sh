@@ -1,6 +1,8 @@
+#!/usr/bin/env bash
+
 printf "\e[36m Running scripts for first set of exercises....\e[39m\n\n"
 
-for EXERCISE in exercise{2,4,5,6,7,8,9,10,11,13,14,15,16,17}.sh; do
+for EXERCISE in exercise{2,4,6,7,8,9,10,11,13,14,15,16,17,18,19}.sh; do
   printf "\n\e[32m Do you want to run ${EXERCISE}? (y/n)\e[39m\n"
   read yn
   case $yn in
@@ -9,3 +11,6 @@ for EXERCISE in exercise{2,4,5,6,7,8,9,10,11,13,14,15,16,17}.sh; do
     * ) echo "Please answer yes or no.";;
   esac
 done
+
+rm -rf second_directory copy testNew
+rm *.txt *.log

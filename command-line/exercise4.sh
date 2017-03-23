@@ -16,5 +16,5 @@ The echo utility writes any specified operands, separated by single blank (\` \'
     builtin echo in sh(1) does not accept the -n option.  Consult the builtin(1) manual page."
 
 
-
+printf "\n\e[36m  Running 'echo -n Hello'\e[39m\n"
 echo -n "hello"
