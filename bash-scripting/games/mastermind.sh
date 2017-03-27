@@ -94,7 +94,7 @@ until [ $ATTEMPTS -gt 6 ]; do
   select_player_color
   check_code
   echo BlackMarbles: [$BM] WhiteMarbles: [$WM] Missed: [$NM]
-  sleep
+  sleep 5
 
   if [ $BM == 5 ]; then
     printf "\e[32m\n Correct! Great job!\e[39m\n"
