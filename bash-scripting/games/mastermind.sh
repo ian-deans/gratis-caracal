@@ -43,11 +43,10 @@ make_master_code () {
         get_random_color
       done
       MASTERCODE[$counter]=${color}
+      let counter++
     fi
-    let counter++
   done
   echo
-  echo ${MASTERCODE[*]}
 }
 
 select_player_color () {
@@ -68,25 +67,44 @@ check_code () {
   until [ $counter -gt 4 ]; do
     local u_color=${USERCODE[$counter]}
     local m_color=${MASTERCODE[$counter]}
-    if [ $m_color == $u_color ]; then
+
+    if [ "$m_color" == "$u_color" ]; then
       let BM++
       let counter++
-    elif $(color_in_master $u_color); then
-      let WW++
+    elif color_in_master $u_color; then
+      let WM++
       let counter++
     else
       let NM++
       let counter++
     fi
+    unset u_color m_color
   done
 }
 
+printf "\n\e[36mWelcome to the game MASTERMIND. In this game there is a MASTERCODE
+which is a combination of 5 random colors and you must crack the code. A black marble denotes
+you picked a correct color and placed it in the correct spot. A white marble means you selected a
+correct color but it is in the wrong spot in the code. You get 7 attempts to crack the code!\e[39m\n\n"
+
 make_master_code
-select_player_color
-check_code
+ATTEMPTS=0
 
-echo MASTER ${MASTERCODE[*]}
-echo USER ${USERCODE[*]}
+until [ $ATTEMPTS -gt 6 ]; do
+  select_player_color
+  check_code
+  echo BlackMarbles: [$BM] WhiteMarbles: [$WM] Missed: [$NM]
+  sleep
 
-echo BM $BM WM $WM NM $NM
+  if [ $BM == 5 ]; then
+    printf "\e[32m\n Correct! Great job!\e[39m\n"
+    break;
+  else
+    BM=0
+    WM=0
+    NM=0
+    let ATTEMPTS++
+  fi
+done
+
 exec bash
